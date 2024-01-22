@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE `Card` MODIFY `isLock` BOOLEAN NULL DEFAULT false,
+    MODIFY `isValid` BOOLEAN NULL DEFAULT true,
+    MODIFY `amount` INTEGER NULL DEFAULT 0;

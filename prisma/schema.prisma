@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      =  env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id_user              String     @id @default(uuid())
+  lastname             String    
+  firstname            String
+  phone_number         String     @unique
+  password             String
+  cards                Card[]
+}
+
+model Card {
+  id_card              String      @id @default(uuid())
+  card_number          String      @unique
+  card_validity        String     
+  card_cvv             String      @unique
+  amount               Int?        @default(0)
+  isLock               Boolean?    @default(false)
+  isValid              Boolean?    @default(true)
+  userId               String     
+  user                 User        @relation(fields: [userId], references: [id_user], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Otp {
+  id                   String      @id @default(uuid())
+  otp                  String
+  expiration_time      DateTime
+  verified             Boolean     @default(false)
+  created_at           DateTime    @default(now())
+  update_at            DateTime    @default(now())
+}
